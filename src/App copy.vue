@@ -1,77 +1,97 @@
 <script setup>
-const users = [
-  {
-    id: 1,
-    name: "Md. Manirul Islam",
-    profilePhoto: "https://ui-avatars.com/api/?name=Md+Manirul+Islam&background=random",
-    jobTitle: "Full Stack Developer"
-  },
-  {
-    id: 2,
-    name: "Ali Siddique",
-    profilePhoto: "https://ui-avatars.com/api/?name=Ayesha+Siddiqua&background=random",
-    jobTitle: "UI/UX Designer"
-  },
-  {
-    id: 3,
-    name: "Tanvir Hasan",
-    profilePhoto: "https://ui-avatars.com/api/?name=Tanvir+Hasan&background=random",
-    jobTitle: "DevOps Engineer"
+import {defineStore} from 'pinia'
+import { ref } from 'vue'
+import {useUserStore} from './stores/userStore'
+import {useProductStore} from './stores/productStore'
+
+
+const userStore = useUserStore()
+const productStore = useProductStore()
+
+const name = ref('')
+const email = ref('')
+
+const productName  = ref('')
+const productPrice  = ref('')
+
+function addUser(){
+  if(name.value && email.value){
+    userStore.addUser({name:name.value , email:email.value})
+    name.value ='',
+    email.value =''
   }
-];
+}
+
+function addProduct(){
+  if(productName.value && productPrice.value){
+      productStore.addProduct({name:productName.value, price:productPrice.value})
+
+    productName.value = ''
+    productPrice.value = ''
+
+  }
+}
+
+
 
 </script>
 
-
 <template>
+  <div class="app">
+    <h1>Pinia User App Centralized Store</h1>
 
-  <div
-    class="d-flex justify-content-center align-items-center"
-    style="height: 100vh; background-color: #dee2e6"
-  >
-    <div class="card shadow p-4" style="min-width: 300px">
-
-      <div class="container py-5">
-    <div class="row g-4">
-
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://ui-avatars.com/api/?name=Md+Manirul+Islam&background=random" alt="Md. Manirul Islam" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
-            <p>Id: 1</p>
-            <p>Md. Manirul Islam</p>
-            <p>Full Stack Developer</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm border border-danger">
-          <div class="card-body">
-            <img src="https://ui-avatars.com/api/?name=Ayesha+Siddiqua&background=random" alt="Ali Siddique" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
-            <p>Id: 2</p>
-            <p>Ali Siddique</p>
-            <p>UI/UX Designer</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card h-100 text-center shadow-sm">
-          <div class="card-body">
-            <img src="https://ui-avatars.com/api/?name=Tanvir+Hasan&background=random" alt="Tanvir Hasan" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
-            <p>Id: 3</p>
-            <p>Tanvir Hasan</p>
-            <p>DevOps Engineer</p>
-          </div>
-        </div>
-      </div>
-
+    <!-- User Form -->
+    <div class="form">
+      <input v-model="name" placeholder="Name" />
+      <input v-model="email" placeholder="Email" />
+      <button @click="addUser" class="btn btn-success">Add User</button>
     </div>
-  </div>
 
-    </div>
+    <!-- User List -->
+    <div class="list">
+      <h3>User List</h3>
+      <ul v-for="(user , index) in userStore.users" :key="index">
+        {{ user.name }} - {{ user.email }}
+      </ul>
+    </div> <br/>
+
+     <h1>Pinia User App Centralized Store (Product)</h1>
+
+    <!-- User Form -->
+    <div class="form">
+      <input v-model="productName" placeholder="product Name" />
+      <input v-model="productPrice" placeholder="product Price" />
+      <button @click="addProduct" class="btn btn-success">Add Product</button>
+    </div> <br />
+
+    <section>
+      <h3>Product List</h3>
+      <ul>
+        <li v-for="(product , index) in productStore.products" :key="index">
+          {{ product.name }} - {{ product.price }}
+
+        </li>
+      </ul>
+    </section>
+
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+  max-width: 500px;
+  margin: auto;
+  padding: 1rem;
+  font-family: sans-serif;
+}
+input {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+button {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+</style>
