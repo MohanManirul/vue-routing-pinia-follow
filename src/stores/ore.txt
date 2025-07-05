@@ -1,0 +1,6 @@
+   getters: {
+        fullname: (state) => {
+        if (!state.user.firstName || !state.user.lastName) return '';
+        return `${state.user.firstName} ${state.user.lastName}`;
+      },
+    },
