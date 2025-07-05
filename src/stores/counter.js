@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import {useAuthStore} from "./auth"
 
 export const useCounterStore = defineStore("counter",{
     state:()=>({
@@ -11,11 +12,18 @@ export const useCounterStore = defineStore("counter",{
     actions: {
 
         increment(){
-            this.count++ ;
+            if(!this.isAuthenticated()) return ;
+            this.count++ ; 
         },
 
         decrement(){
-            this.count-- ;
+            if(!this.isAuthenticated()) return ;
+            this.count-- ; 
+        },
+
+        isAuthenticated(){
+           const authStore = useAuthStore();
+           return authStore.isAuthenticated ;
         }
     },
 

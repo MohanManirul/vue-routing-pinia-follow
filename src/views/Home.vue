@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import Counter from "../components/Counter.vue"
 import { useAuthStore } from "../stores/auth"
 
-// const {isAuthenticated,user} = useAuthStore();
+const authStore = useAuthStore();
 
 const {isAuthenticated , user} =  storeToRefs(useAuthStore());
 
@@ -16,8 +16,8 @@ const {isAuthenticated , user} =  storeToRefs(useAuthStore());
 
     
 
-    <div v-if="isAuthenticated">
-      User Name is : {{ user.name }}
+    <div v-if="authStore.isAuthenticated">
+      User Name is : {{ authStore.fullname	 }} 
     </div>
 
     <Counter />
