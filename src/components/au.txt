@@ -1,0 +1,23 @@
+// function logout() {
+//   authStore.isAuthenticated = false;
+// }
+
+// function logout() {
+//  authStore.$state = {isAuthenticated : false , user:{} } ;
+// }
+
+// function logout() {
+//  authStore.$patch({isAuthenticated : false , user:{} }) ;
+// }
+
+function logout() {
+ authStore.$patch((state)=>{
+  (state.isAuthenticated = false),
+  (state.user = {}) ;
+ });
+}
+
+
+function login(){
+  authStore.isAuthenticated = true;
+}

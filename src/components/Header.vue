@@ -1,30 +1,63 @@
 <script setup>
+
+import { useAuthStore } from "../stores/auth";
+const authStore = useAuthStore();
+
+function logout() {
+  authStore.isAuthenticated = false;
+  authStore.user = {}; // নতুন empty object assign করছো
+  console.log("User after logout:", authStore.user); // Debug log
+}
+
+function login(){
+  authStore.isAuthenticated = true;
+}
 </script>
 
 <template>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <router-link class="navbar-brand" :to="{ name: 'home' }"
+        >Vue App</router-link
+      >
+      <div>
+        <router-link
+          class="nav-link d-inline text-white me-3"
+          :to="{ name: 'home' }"
+          >Home</router-link
+        >
+        <router-link
+          class="nav-link d-inline text-white me-3"
+          :to="{ name: 'about' }"
+          >About</router-link
+        >
+        <router-link
+          class="nav-link d-inline text-white me-3"
+          :to="{ name: 'blog' }"
+          >Blogs</router-link
+        >
+        <router-link
+          class="nav-link d-inline text-white me-3"
+          :to="{ name: 'contact' }"
+          >Contact Us</router-link
+        >
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
-        <router-link  class="navbar-brand" :to="{name:'home'}">Vue App</router-link>
-        <div>
-          <router-link class="nav-link d-inline text-white me-3" :to="{name:'home'}"
-            >Home</router-link
-          >
-          <router-link  class="nav-link d-inline text-white me-3" :to="{name:'about'}"
-            >About</router-link
-          >
-          <router-link  class="nav-link d-inline text-white me-3" :to="{name:'blog'}"
-            >Blogs</router-link
-          >
-          <router-link  class="nav-link d-inline text-white  me-3" :to="{name:'contact'}"
-            >Contact Us</router-link
-          >
-        
-        </div>
+        <li
+          v-if="authStore.isAuthenticated"
+          class="nav-link d-inline text-white me-3"
+        >
+          <button class="btn btn-danger" @click="logout">Logout</button>
+        </li>
+        <li
+          v-else
+          class="nav-link d-inline text-white me-3"
+        >
+          <button class="btn btn-success" @click="login">Login</button>
+        </li>
+
       </div>
-    </nav>
-
+    </div>
+  </nav>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
