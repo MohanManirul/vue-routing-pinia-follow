@@ -3,19 +3,6 @@
 import { useAuthStore } from "../stores/auth";
 const authStore = useAuthStore();
 
-// function logout() {
-//   authStore.isAuthenticated = false;
-// }
-
-// function logout(){
-//   authStore.$state = {isAuthenticated:false, user:{}} ;
- 
-// }
-
-// function login(){
-//    authStore.$state = {isAuthenticated:true, user:{name:"saiful",
-//             email:"saiful@gmail.com",}} ; 
-// }
 
 function logout(){
   authStore.$patch((state)=>{

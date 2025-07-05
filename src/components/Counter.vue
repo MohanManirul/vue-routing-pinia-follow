@@ -1,34 +1,22 @@
 
 <script setup>
-import { computed } from "vue";
+import { storeToRefs } from "pinia";
+
 import { useCounterStore } from "../stores/counter";
-    const store = useCounterStore();
-
-    function increment(){
-        store.count++ ;
-    }
-
-    function decrement(){
-        store.count-- ;
-    }
-
-    // const countDigitLength = store.count.toString().length ; প্রথমে এটা দেখাতে হবে
-
-   // const countDigitLength = computed(()=>store.count.toString().length) ;
-    // আমরা এটাকে computed property তে কনভার্ট করব এবং store এ মুভ করাব
-
+const  counterStore= useCounterStore()
+const { count ,  countDigitLength} = storeToRefs(counterStore);
 
 </script>
 
 <template>
 
 <div class="d-flex justify-content-center align-items-center gap-3" > <br /> <br />
-  <button class="btn btn-danger" @click="decrement">-</button>
-  <p class="mb-0">Count Value: {{ store.count }}</p>
-  <button class="btn btn-primary" @click="increment">+</button>
+  <button class="btn btn-danger" @click="counterStore.decrement">-</button>
+  <p class="mb-0">Count Value: {{ count }}</p>
+  <button class="btn btn-primary" @click="counterStore.increment">+</button>
 </div>
 <br />
-<p>Counter Moved To {{ store.countDigitLength }} Digit Length</p>
+<p>Counter Moved To {{ countDigitLength }} Digit Length</p>
 
 </template>
 
