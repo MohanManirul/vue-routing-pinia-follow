@@ -11,12 +11,10 @@
 // }
 
 function logout() {
- authStore.$patch((state)=>{
-  (state.isAuthenticated = false),
-  (state.user = {}) ;
- });
+  authStore.isAuthenticated = false;
+  authStore.user = {}; // নতুন empty object assign করছো
+  console.log("User after logout:", authStore.user); // Debug log
 }
-
 
 function login(){
   authStore.isAuthenticated = true;

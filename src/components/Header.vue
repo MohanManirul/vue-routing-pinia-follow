@@ -3,15 +3,35 @@
 import { useAuthStore } from "../stores/auth";
 const authStore = useAuthStore();
 
-function logout() {
-  authStore.isAuthenticated = false;
-  authStore.user = {}; // নতুন empty object assign করছো
-  console.log("User after logout:", authStore.user); // Debug log
+// function logout() {
+//   authStore.isAuthenticated = false;
+// }
+
+// function logout(){
+//   authStore.$state = {isAuthenticated:false, user:{}} ;
+ 
+// }
+
+// function login(){
+//    authStore.$state = {isAuthenticated:true, user:{name:"saiful",
+//             email:"saiful@gmail.com",}} ; 
+// }
+
+function logout(){
+  authStore.$patch((state)=>{
+    state.isAuthenticated = false,
+    state.user = {}
+  })
+ 
 }
 
 function login(){
-  authStore.isAuthenticated = true;
+    authStore.$patch((state)=>{
+    state.isAuthenticated = true
+    state.user = {name:"saiful" , email:"saiful@gmail.com"}
+  })
 }
+
 </script>
 
 <template>
